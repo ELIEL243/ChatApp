@@ -13,6 +13,7 @@ class Post(models.Model):
 
 class Employee(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    img = models.ImageField(upload_to='user-profiles', null=True)
     name = models.CharField(max_length=255, null=False)
     mail = models.EmailField(null=False)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
