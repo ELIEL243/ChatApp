@@ -54,7 +54,7 @@
   $('.eg-toastr-top-right').on("click", function (e) {
     e.preventDefault();
     toastr.clear();
-    NioApp.Toast('This is a note for top right toast message.', 'info', {
+    NioApp.Toast('Mail ou mot de passe incorrect !', 'error', {
       position: 'top-right'
     });
   });
@@ -92,6 +92,22 @@
     toastr.clear();
     NioApp.Toast('This is a note for error toast message.', 'error');
   });
+  $('.error-subscribe').on("click", function (e) {
+    e.preventDefault();
+    toastr.clear();
+    NioApp.Toast('Un utilisateur avec cette adresse mail existe deja !', 'error', {
+      position: 'top-center'
+    });
+  });
+
+  $('.warning-subscribe').on("click", function (e) {
+    e.preventDefault();
+    toastr.clear();
+    NioApp.Toast('Le mot de passe est trop similaire au nom d"utilisateur  !', 'warning', {
+      position: 'top-center'
+    });
+  });
+
   $('.eg-toastr-dark').on("click", function (e) {
     e.preventDefault();
     toastr.clear();

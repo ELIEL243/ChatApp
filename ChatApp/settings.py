@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-n9lh)ztg4@=gn#8r#zbd6cznxdxcpklh2lx=obkr^%!yapdbjc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chat',
+    'django.contrib.sites',
+    'channels',
 ]
-
+SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -70,7 +72,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ChatApp.wsgi.application'
-
+ASGI_APPLICATION = "ChatApp.routing.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -89,6 +91,10 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'OPTIONS': {
+         'max_similarity': 0.7,
+         'user_attributes': ("first_name", "last_name")
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
@@ -105,13 +111,18 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_TZ = True
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': "channels.layers.InMemoryChannelLayer"
+        }
+    }
 
 
 # Static files (CSS, JavaScript, Images)
@@ -119,12 +130,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static')
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'mail.dreamdev243.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'audry@dreamdev243.com'
+EMAIL_HOST_PASSWORD = 'Audry2002'
+DEFAULT_FROM_EMAIL = 'audry@dreamdev243.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
