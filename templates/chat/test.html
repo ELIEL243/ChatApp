@@ -1,0 +1,64 @@
+  {% if chat_with != employee.id %}
+                                            <div class="chat is-you">
+                                                <div class="chat-avatar">
+                                                    <div class="user-avatar bg-purple">
+                                                        <span>{{ chat_with.initial }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="chat-content">
+                                                    <div class="chat-bubbles">
+                                                        <div class="chat-bubble">
+                                                            <div class="chat-msg"> ${data.message}</div>
+                                                            <ul class="chat-msg-more">
+                                                                <li class="d-none d-sm-block"><a href="#" class="btn btn-icon btn-sm btn-trigger"><em class="icon ni ni-reply-fill"></em></a></li>
+                                                                <li>
+                                                                    <div class="dropdown">
+                                                                        <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                                                            <ul class="link-list-opt no-bdr">
+                                                                                <li class="d-sm-none"><a href="#"><em class="icon ni ni-reply-fill"></em> Reply</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-pen-alt-fill"></em> Edit</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-trash-fill"></em> Remove</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="chat-meta">
+                                                        <li>{{ conv.sender.name }}</li>
+                                                        <li>{{ conv.create }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .chat -->
+                                                    {% else %}
+                                                    <div class="chat is-me">
+
+                                                <div class="chat-content">
+                                                    <div class="chat-bubbles">
+                                                        <div class="chat-bubble">
+                                                            <div class="chat-msg"> ${data.message} </div>
+                                                            <ul class="chat-msg-more">
+                                                                <li class="d-none d-sm-block"><a href="#" class="btn btn-icon btn-sm btn-trigger"><em class="icon ni ni-reply-fill"></em></a></li>
+                                                                <li>
+                                                                    <div class="dropdown">
+                                                                        <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                                                            <ul class="link-list-opt no-bdr">
+                                                                                <li class="d-sm-none"><a href="#"><em class="icon ni ni-reply-fill"></em> Reply</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-pen-alt-fill"></em> Edit</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-trash-fill"></em> Remove</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="chat-meta">
+                                                        <li>now</li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .chat -->
+{% endif %}

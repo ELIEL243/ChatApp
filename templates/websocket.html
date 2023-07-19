@@ -1,0 +1,229 @@
+{{ chat_with.name|json_script:"user_username" }}
+        {{ room_name|json_script:"room-name" }}
+
+        <script>
+   var user_username = JSON.parse(document.getElementById('user_username').textContent);
+    var sender_name = document.getElementById('receiver-id').value;
+    var file = ""
+   var call = false
+    var message = ""
+   var boxName = JSON.parse(document.getElementById('room-name').textContent);
+   var check_sender = "me"
+   var chatSocket = new WebSocket(
+      'ws://' +
+      window.location.host +
+      '/ws/chat/' +
+      boxName +
+      '/'
+   );
+
+   document.getElementById('call-btn').onclick = function (e) {
+       call = true
+       chatSocket.send(JSON.stringify({
+          'call': boxName,
+           'message': message,
+          'username': user_username,
+          'file': file,
+      }));
+       check_sender = "you";
+   }
+
+   document.getElementById('submit').onclick = function (e) {
+      const messageInputDom = document.getElementById('default-textarea');
+      message = messageInputDom.value;
+      file = document.getElementById('uploaded-file').value;
+      chatSocket.send(JSON.stringify({
+          'message': message,
+          'username': user_username,
+          'file': file,
+          'call': boxName,
+      }));
+      messageInputDom.value = '';
+      check_sender = "me";
+
+   };
+
+   // The text is empty
+
+   chatSocket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+
+       if(check_sender === "you"){
+          check_sender = "me"
+
+          if(message.length > 0) {
+              document.querySelector('#chat-panel').innerHTML += `
+                                            <div class="chat is-you mt-5">
+                                                <div class="chat-avatar">
+                                                    <div class="user-avatar bg-purple">
+                                                        <span>{{ chat_with.initial }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="chat-content">
+                                                    <div class="chat-bubbles">
+                                                        <div class="chat-bubble">
+                                                            <div class="chat-msg"> ${data.message}</div>
+                                                            <ul class="chat-msg-more">
+                                                                <li class="d-none d-sm-block"><a href="#" class="btn btn-icon btn-sm btn-trigger"><em class="icon ni ni-reply-fill"></em></a></li>
+                                                                <li>
+                                                                    <div class="dropdown">
+                                                                        <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                                                            <ul class="link-list-opt no-bdr">
+                                                                                <li class="d-sm-none"><a href="#"><em class="icon ni ni-reply-fill"></em> Reply</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-pen-alt-fill"></em> Edit</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-trash-fill"></em> Remove</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="chat-meta">
+                                                        <li>{{ conv.sender.name }}</li>
+                                                        <li>{{ conv.create }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .chat -->
+
+      `
+          }else if(file.length > 0){
+                     document.querySelector('#chat-panel').innerHTML += `
+                                            <div class="chat is-you mt-5">
+                                                <div class="chat-avatar">
+                                                    <div class="user-avatar bg-purple">
+                                                        <span>{{ chat_with.initial }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="chat-content">
+                                                    <div class="chat-bubbles">
+                                                        <div class="chat-bubble">
+                                                            <div class="chat-msg">
+                                                                <div class="nk-file-item nk-file">
+    <div class="nk-file-info">
+        <div class="nk-file-title">
+            <div class="custom-control custom-control-sm custom-checkbox notext">
+                <input type="checkbox" class="custom-control-input" id="file-check-n2">
+                <label class="custom-control-label" for="file-check-n2"></label>
+            </div>
+            <div class="nk-file-icon">
+                <span class="nk-file-icon-type">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+                        <g>
+                            <rect x="32" y="16" width="28" height="15" rx="2.5" ry="2.5" style="fill:#f29611" />
+                            <path d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z" style="fill:#ffb32c" />
+                            <path d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z" style="fill:#f2a222" />
+                        </g>
+                    </svg>
+                </span>
+            </div>
+            <div class="nk-file-name">
+                <div class="nk-file-name-text">
+                    <a href="media/send-files/${data.file.split('\\')[2]}" class="title">${data.file.split('\\')[2]}</a>
+                    <div class="nk-file-star asterisk"><a href="#" class="active"><em class="asterisk-off icon ni ni-star"></em><em class="asterisk-on icon ni ni-star-fill"></em></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="chat-meta">
+                                                        <li>{{ conv.sender.name }}</li>
+                                                        <li>{{ conv.create }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .chat -->
+
+      `
+          }
+      }
+      else if(check_sender === "me") {
+
+          if(message.length > 0){
+          document.querySelector('#chat-panel').innerHTML += `
+
+                                                    <div class="chat is-me mt-5">
+
+                                                <div class="chat-content">
+                                                    <div class="chat-bubbles">
+                                                        <div class="chat-bubble">
+                                                            <div class="chat-msg"> ${data.message} </div>
+                                                            <ul class="chat-msg-more">
+                                                                <li class="d-none d-sm-block"><a href="#" class="btn btn-icon btn-sm btn-trigger"><em class="icon ni ni-reply-fill"></em></a></li>
+                                                                <li>
+                                                                    <div class="dropdown">
+                                                                        <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                                                            <ul class="link-list-opt no-bdr">
+                                                                                <li class="d-sm-none"><a href="#"><em class="icon ni ni-reply-fill"></em> Reply</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-pen-alt-fill"></em> Edit</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-trash-fill"></em> Remove</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="chat-meta">
+                                                        <li>now</li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .chat -->
+
+      `
+      }
+      else if(file.length > 0){
+            document.querySelector('#chat-panel').innerHTML += `
+                                            <div class="chat is-me mt-5">
+                                                <div class="chat-avatar">
+                                                    <div class="user-avatar bg-purple">
+                                                        <span>{{ chat_with.initial }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="chat-content">
+                                                    <div class="chat-bubbles">
+                                                        <div class="chat-bubble">
+                                                            <div class="chat-msg">
+                                                                <div class="nk-file-item nk-file">
+    <div class="nk-file-info">
+        <div class="nk-file-title">
+
+            <div class="nk-file-icon">
+                <span class="nk-file-icon-type">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+                        <g>
+                            <rect x="32" y="16" width="28" height="15" rx="2.5" ry="2.5" style="fill:#f29611" />
+                            <path d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z" style="fill:#ffb32c" />
+                            <path d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z" style="fill:#f2a222" />
+                        </g>
+                    </svg>
+                </span>
+            </div>
+            <div class="nk-file-name">
+                <div class="nk-file-name-text">
+                    <a href="media/send-files/${data.file.split('\\')[2]}" class="title">${data.file.split('\\')[2]}</a>
+                    <div class="nk-file-star asterisk"><a href="#" class="active"><em class="asterisk-off icon ni ni-star"></em><em class="asterisk-on icon ni ni-star-fill"></em></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="chat-meta">
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .chat -->
+
+      `
+          }
+      }
+
+   }
+
+</script>

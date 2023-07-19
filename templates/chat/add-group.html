@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="nk-wrap">
+        <div class="nk-content">
+            <div class="nk-content ">
+                <div class="container-fluid">
+                    <div class="nk-content-inner">
+                        <div class="nk-content-body">
+                            <div class="nk-block-head nk-block-head-sm">
+                                <div class="nk-block-between">
+                                    <div class="nk-block-head-content">
+                                        <h3 class="nk-block-title page-title">Groupe {{ group.name }}</h3>
+                                    </div><!-- .nk-block-head-content -->
+                                    <div class="nk-block-head-content">
+
+                                    </div><!-- .nk-block-head-content -->
+                                    <div class="nk-block-content row">
+
+
+                                </div>
+                                </div><!-- .nk-block-between -->
+                                <div class="nk-block-content row gy-4">
+                                                <form method="post">
+                                                    {% csrf_token %}
+
+
+                                                <div class="row">
+                                                <div class="col-lg-4 col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="product-title">Employé</label>
+                                                    <div class="form-control-wrap">
+                                                        <input type="text" autocomplete="off" list="emps" name="name" class="form-control" id="product-title" required>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <datalist id="emps">
+                                                    {% for emp in employees %}
+                                                        <option value="{{ emp.name }}"></option>
+                                                    {% endfor %}
+                                                </datalist>
+
+                                            <div class="col-lg-4 col-sm-6">
+                                                <div class="form-group">
+
+                                                <button type="submit" id="submit-btn" class="btn btn-primary" style="margin-top: 31px"><em class="icon ni ni-plus"></em><span>Ajouter</span></button>
+                                                                      <a href="{% url 'home-chat-group' employee.entreprise.name %}"
+                                                           class="btn btn-success d-none d-md-inline-flex" style="margin-top: 31px"><em
+                                                                class="icon ni ni-check"></em><span>continuer</span></a>
+
+                                                </div>
+                                                </div>
+                                                </div>
+
+                                                </form>
+
+                                </div>
+                            </div><!-- .nk-block-head -->
+                            <div class="nk-block">
+                                            <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Initial</th>
+                                                            <th scope="col">Nom</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for emp in employees_grp %}
+                                                        <tr>
+                                                            <td>{{ emp.employee.initial }}</td>
+                                                            <td>{{ emp.employee.name }}</td>
+
+
+                                                        </tr>
+                                                        {% endfor %}
+
+                                                    </tbody>
+                                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                       <li><a href="#" class="hidden btn btn-primary eg-swal-av2" id="success" style="display: none">Advanced 02</a></li>
+                                                        <li><a href="#" class="hidden btn btn-primary eg-swal-av22" id="error" style="display: none">Advanced 02</a></li>
+
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <script>
+            window.onload = function (){
+              document.getElementById('success').click();
+            };
+        </script>
+                {% else %}
+                <script>
+            window.onload = function (){
+              document.getElementById('error').click();
+            };
+        </script>
+            {% endif %}
+        {% endfor %}
+
+    {% endif %}
+
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+
+
+{% endblock %}

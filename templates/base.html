@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Scroll Talk</title>
+    <link rel="stylesheet" href="{% static 'css2/dashlite.css' %}">
+    <link id="skin-default" rel="stylesheet" href="{% static 'css2/theme.css' %}">
+</head>
+
+        {% block content %}
+        {% endblock %}
+
+    <script src="{% static 'js/bundle.js' %}"></script>
+    <script src="{% static 'js/apps/chats.js' %}"></script>
+
+
+    <script src="{% static 'js/libs/datatable-btns.js' %}"></script>
+
+    <script src="{% static 'js/example-sweetalert.js' %}"></script>
+
+</html>

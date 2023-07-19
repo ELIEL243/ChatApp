@@ -1,0 +1,535 @@
+{% load static %}
+<body>
+
+                                        <div class="nk-chat-head">
+                                            <ul class="nk-chat-head-info">
+                                                <li class="nk-chat-body-close">
+                                                    <a href="#" class="btn btn-icon btn-trigger nk-chat-hide ms-n1"><em class="icon ni ni-arrow-left"></em></a>
+                                                </li>
+                                                <li class="nk-chat-head-user">
+                                                    <div class="user-card">
+                                                        <div class="user-avatar bg-purple">
+
+                                                            <span>{{ group.initial }}</span>
+                                                        </div>
+                                                        <div class="user-info">
+                                                            <div class="lead-text">{{ group.name }}</div>
+
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <ul class="nk-chat-head-tools">
+                                                <li><a id="call-btn" class="btn btn-icon btn-trigger text-primary"><em class="icon ni ni-call-fill"></em></a></li>
+                                                <li><a href="#" class="btn btn-icon btn-trigger text-primary"><em class="icon ni ni-video-fill"></em></a></li>
+                                                <li class="d-none d-sm-block">
+                                                    <div class="dropdown">
+                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger text-primary" data-bs-toggle="dropdown"><em class="icon ni ni-setting-fill"></em></a>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <ul class="link-list-opt no-bdr">
+                                                                <li><a class="dropdown-item" href="#"><em class="icon ni ni-archive"></em><span>Make as Archive</span></a></li>
+                                                                <li><a class="dropdown-item" href="#"><em class="icon ni ni-cross-c"></em><span>Remove Conversion</span></a></li>
+                                                                <li><a class="dropdown-item" href="#"><em class="icon ni ni-setting"></em><span>More Options</span></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="me-n1 me-md-n2"><a href="#" class="btn btn-icon btn-trigger text-primary chat-profile-toggle"><em class="icon ni ni-alert-circle-fill"></em></a></li>
+                                            </ul>
+                                            <div class="nk-chat-head-search">
+                                                <div class="form-group">
+                                                    <div class="form-control-wrap">
+                                                        <div class="form-icon form-icon-left">
+                                                            <em class="icon ni ni-search"></em>
+                                                        </div>
+                                                        <input type="text" class="form-control form-round" id="chat-search" placeholder="Search in Conversation">
+                                                    </div>
+                                                </div>
+                                            </div><!-- .nk-chat-head-search -->
+                                        </div><!-- .nk-chat-head -->
+                                        <div class="nk-chat-panel" id="chat-panel" hx-target="this" hx-get="{% url 'get_conversation_refresh' group.name %}" hx-trigger="every 1s" hx-swap="innerHTML"  data-simplebar>
+                                            {% for conv in conversations %}
+                                                {% if conv.sender_id != employee.id %}
+                                            <div class="chat is-you">
+                                                <div class="chat-avatar">
+                                                    <div class="user-avatar bg-purple">
+                                                        <span>{{ conv.sender.initial }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="chat-content">
+                                                    <div class="chat-bubbles">
+                                                        <div class="chat-bubble">
+                                                            <div class="chat-msg"> {% if conv.message_content.text_message %}{{ conv.message_content.text_message }}
+                                                            {% else %}
+                                                                <div class="nk-file-item nk-file">
+    <div class="nk-file-info">
+        <div class="nk-file-title">
+
+            <div class="nk-file-icon">
+                <span class="nk-file-icon-type">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+                        <g>
+                            <rect x="32" y="16" width="28" height="15" rx="2.5" ry="2.5" style="fill:#f29611" />
+                            <path d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z" style="fill:#ffb32c" />
+                            <path d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z" style="fill:#f2a222" />
+                        </g>
+                    </svg>
+                </span>
+            </div>
+            <div class="nk-file-name">
+                <div class="nk-file-name-text">
+                    <a href="{{ conv.message_content.file.url }}" class="title text-light">{{ conv.message_content.file.name }}</a>
+                    <div class="nk-file-star asterisk"><a href="#" class="active"><em class="asterisk-off icon ni ni-star"></em><em class="asterisk-on icon ni ni-star-fill"></em></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                                                            {% endif %}
+
+                                                            </div>
+                                                            <ul class="chat-msg-more">
+                                                                <li class="d-none d-sm-block"><a href="#" class="btn btn-icon btn-sm btn-trigger"><em class="icon ni ni-reply-fill"></em></a></li>
+                                                                <li>
+                                                                    <div class="dropdown">
+                                                                        <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                                                            <ul class="link-list-opt no-bdr">
+                                                                                <li class="d-sm-none"><a href="#"><em class="icon ni ni-reply-fill"></em> Reply</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-pen-alt-fill"></em> Edit</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-trash-fill"></em> Remove</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="chat-meta">
+                                                        <li>{{ conv.sender.name }}</li>
+                                                        <li>{{ conv.create }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .chat -->
+                                                    {% else %}
+                                                    <div class="chat is-me">
+
+                                                <div class="chat-content">
+                                                    <div class="chat-bubbles">
+                                                        <div class="chat-bubble">
+                                                            <div class="chat-msg"> {% if conv.message_content.text_message %}{{ conv.message_content.text_message }}{% else %}
+                                                                <div class="nk-file-item nk-file">
+    <div class="nk-file-info">
+        <div class="nk-file-title">
+
+            <div class="nk-file-icon">
+                <span class="nk-file-icon-type">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+                        <g>
+                            <rect x="32" y="16" width="28" height="15" rx="2.5" ry="2.5" style="fill:#f29611" />
+                            <path d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z" style="fill:#ffb32c" />
+                            <path d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z" style="fill:#f2a222" />
+                        </g>
+                    </svg>
+                </span>
+            </div>
+            <div class="nk-file-name">
+                <div class="nk-file-name-text">
+                    <a href="{{ conv.message_content.file.url }}" class="title text-light">{{ conv.message_content.file.name }}</a>
+                    <div class="nk-file-star asterisk"><a href="#" class="active"><em class="asterisk-off icon ni ni-star"></em><em class="asterisk-on icon ni ni-star-fill"></em></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                                                            {% endif %} </div>
+                                                            <ul class="chat-msg-more">
+                                                                <li class="d-none d-sm-block"><a href="#" class="btn btn-icon btn-sm btn-trigger"><em class="icon ni ni-reply-fill"></em></a></li>
+                                                                <li>
+                                                                    <div class="dropdown">
+                                                                        <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                                                            <ul class="link-list-opt no-bdr">
+                                                                                <li class="d-sm-none"><a href="#"><em class="icon ni ni-reply-fill"></em> Reply</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-pen-alt-fill"></em> Edit</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-trash-fill"></em> Remove</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="chat-meta">
+                                                        <li>{{ conv.create }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .chat -->
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        </div><!-- .nk-chat-panel -->
+
+                                            <form method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+
+                                            <div class="nk-chat-editor">
+
+                                            <div class="nk-chat-editor-upload  ms-n1">
+                                                <a href="#" class="btn btn-sm btn-icon btn-trigger text-primary toggle-opt" data-target="chat-upload1"><em class="icon ni ni-plus-circle-fill"></em></a>
+                                                <div class="chat-upload-option" data-content="chat-upload1">
+
+                                                <input type="file" name="file1" accept=".pdf,.docx,.xlsx,.png" id="uploaded-file">
+
+                                                </div>
+                                            </div>
+                                            <div class="nk-chat-editor-form">
+                                                <div class="form-control-wrap">
+
+                                                    <textarea class="form-control form-control-simple no-resize" rows="1" id="default-textarea" name="msg" placeholder="Type your message..."></textarea>
+                                                    <input type="hidden" name="sender-id" id="sender-id" value="{{ employee.id }}">
+                                                    <input type="hidden" name="group" id="group-name" value="{{ group.name }}">
+
+                                                </div>
+                                            </div>
+                                            <ul class="nk-chat-editor-tools g-2">
+                                                <li>
+                                                    <a href="#" class="btn btn-sm btn-icon btn-trigger text-primary"><em class="icon ni ni-happyf-fill"></em></a>
+                                                </li>
+                                                <li>
+                                                    <button type="button" class="btn btn-round btn-primary btn-icon" id="submit" hx-encoding='multipart/form-data' hx-post="{% url 'send-msg-group' %}" hx-trigger="click" hx-target="#near"><em class="icon ni ni-send-alt"></em></button>
+                                                </li>
+                                            </ul>
+
+                                        </div><!-- .nk-chat-editor -->
+                                            </form>
+                                        <div class="nk-chat-profile visible" data-simplebar>
+                                            <div class="user-card user-card-s2 my-4">
+                                                <div class="user-avatar md bg-purple">
+                                                    <span>{{ group.initial }}</span>
+                                                </div>
+                                                <div class="user-info">
+                                                    <h5>{{ group.name }}</h5>
+                                                </div>
+                                                <div class="user-card-menu dropdown">
+                                                    <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <ul class="link-list-opt no-bdr">
+                                                            <li><a href="#"><em class="icon ni ni-eye"></em><span>View Profile</span></a></li>
+                                                            <li><a href="#"><em class="icon ni ni-na"></em><span>Block Messages</span></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="chat-profile">
+                                                <div class="chat-profile-group">
+                                                    <a href="#" class="chat-profile-head" data-bs-toggle="collapse" data-bs-target="#chat-options">
+                                                        <h6 class="title overline-title">Options</h6>
+                                                        <span class="indicator-icon"><em class="icon ni ni-chevron-down"></em></span>
+                                                    </a>
+                                                    <div class="chat-profile-body collapse show" id="chat-options">
+                                                        <div class="chat-profile-body-inner">
+                                                            <ul class="chat-profile-options">
+                                                                <li><a class="chat-option-link" href="#"><em class="icon icon-circle bg-light ni ni-edit-alt"></em><span class="lead-text">Nickname</span></a></li>
+                                                                <li><a class="chat-option-link chat-search-toggle" href="#"><em class="icon icon-circle bg-light ni ni-search"></em><span class="lead-text">Search In Conversation</span></a></li>
+                                                                <li><a class="chat-option-link" href="#"><em class="icon icon-circle bg-light ni ni-circle-fill"></em><span class="lead-text">Change Theme</span></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- .chat-profile-group -->
+                                                <div id="near"></div>
+                                                <div class="chat-profile-group">
+                                                    <a href="#" class="chat-profile-head" data-bs-toggle="collapse" data-bs-target="#chat-settings">
+                                                        <h6 class="title overline-title">Settings</h6>
+                                                        <span class="indicator-icon"><em class="icon ni ni-chevron-down"></em></span>
+                                                    </a>
+                                                    <div class="chat-profile-body collapse show" id="chat-settings">
+                                                        <div class="chat-profile-body-inner">
+                                                            <ul class="chat-profile-settings">
+                                                                <li>
+                                                                    <div class="custom-control custom-control-sm custom-switch">
+                                                                        <input type="checkbox" class="custom-control-input" id="customSwitch2">
+                                                                        <label class="custom-control-label" for="customSwitch2">Notifications</label>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="chat-option-link" href="#">
+                                                                        <em class="icon icon-circle bg-light ni ni-bell-off-fill"></em>
+                                                                        <div>
+                                                                            <span class="lead-text">Ignore Messages</span>
+                                                                            <span class="sub-text">You won’t be notified when message you.</span>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="chat-option-link" href="#">
+                                                                        <em class="icon icon-circle bg-light ni ni-alert-fill"></em>
+                                                                        <div>
+                                                                            <span class="lead-text">Something Wrong</span>
+                                                                            <span class="sub-text">Give feedback and report conversion.</span>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- .chat-profile-group -->
+                                                <div class="chat-profile-group">
+                                                    <a href="#" class="chat-profile-head" data-bs-toggle="collapse" data-bs-target="#chat-photos">
+                                                        <h6 class="title overline-title">Shared Photos</h6>
+                                                        <span class="indicator-icon"><em class="icon ni ni-chevron-down"></em></span>
+                                                    </a>
+                                                    <div class="chat-profile-body collapse show" id="chat-photos">
+                                                        <div class="chat-profile-body-inner">
+                                                            <ul class="chat-profile-media">
+                                                                <li><a href="#"><img src="./images/slides/slide-a.jpg" alt=""></a></li>
+                                                                <li><a href="#"><img src="./images/slides/slide-b.jpg" alt=""></a></li>
+                                                                <li><a href="#"><img src="./images/slides/slide-c.jpg" alt=""></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- .chat-profile-group -->
+                                            </div> <!-- .chat-profile -->
+                                        </div><!-- .nk-chat-profile -->
+
+
+
+<script src="{% static 'js/bundle.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script src="{% static 'js/apps/chats.js' %}"></script>
+
+
+
+
+
+        {{ employee.name|json_script:"user_username" }}
+        {{ group.id|json_script:"room-name" }}
+
+        <script>
+   var user_username = JSON.parse(document.getElementById('user_username').textContent);
+    var sender_name = "";
+    var file = ""
+   var call = false
+    var message = ""
+   var boxName = JSON.parse(document.getElementById('room-name').textContent);
+   var check_sender = "you"
+   var chatSocket = new WebSocket(
+      'ws://' +
+      window.location.host +
+      '/ws/chat/' +
+      boxName +
+      '/'
+   );
+
+   document.getElementById('call-btn').onclick = function (e) {
+       call = true
+       chatSocket.send(JSON.stringify({
+          'call': "rfhgr",
+           'message': message,
+          'username': user_username,
+          'file': file,
+      }));
+       check_sender = "me";
+   }
+
+   document.getElementById('submit').onclick = function (e) {
+      const messageInputDom = document.getElementById('default-textarea');
+      message = messageInputDom.value;
+      file = document.getElementById('uploaded-file').value;
+      chatSocket.send(JSON.stringify({
+          'message': message,
+          'username': user_username,
+          'file': file,
+          'call': boxName,
+      }));
+      messageInputDom.value = '';
+      check_sender = "me"
+   };
+
+   // The text is empty
+
+   chatSocket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+
+       if(check_sender === "you"){
+          check_sender = "me"
+
+          if(message.length > 0) {
+              document.querySelector('#chat-panel').innerHTML += `
+                                            <div class="chat is-you mt-5">
+                                                <div class="chat-avatar">
+                                                    <div class="user-avatar bg-purple">
+                                                        <span>{{ employee.initial }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="chat-content">
+                                                    <div class="chat-bubbles">
+                                                        <div class="chat-bubble">
+                                                            <div class="chat-msg"> ${data.message}</div>
+                                                            <ul class="chat-msg-more">
+                                                                <li class="d-none d-sm-block"><a href="#" class="btn btn-icon btn-sm btn-trigger"><em class="icon ni ni-reply-fill"></em></a></li>
+                                                                <li>
+                                                                    <div class="dropdown">
+                                                                        <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                                                            <ul class="link-list-opt no-bdr">
+                                                                                <li class="d-sm-none"><a href="#"><em class="icon ni ni-reply-fill"></em> Reply</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-pen-alt-fill"></em> Edit</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-trash-fill"></em> Remove</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="chat-meta">
+                                                        <li>{{ conv.sender.name }}</li>
+                                                        <li>{{ conv.create }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .chat -->
+
+      `
+          }else if(file.length > 0){
+                     document.querySelector('#chat-panel').innerHTML += `
+                                            <div class="chat is-you mt-5">
+                                                <div class="chat-avatar">
+                                                    <div class="user-avatar bg-purple">
+                                                        <span>{{ employee.initial }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="chat-content">
+                                                    <div class="chat-bubbles">
+                                                        <div class="chat-bubble">
+                                                            <div class="chat-msg">
+                                                                <div class="nk-file-item nk-file">
+    <div class="nk-file-info">
+        <div class="nk-file-title">
+            <div class="custom-control custom-control-sm custom-checkbox notext">
+                <input type="checkbox" class="custom-control-input" id="file-check-n2">
+                <label class="custom-control-label" for="file-check-n2"></label>
+            </div>
+            <div class="nk-file-icon">
+                <span class="nk-file-icon-type">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+                        <g>
+                            <rect x="32" y="16" width="28" height="15" rx="2.5" ry="2.5" style="fill:#f29611" />
+                            <path d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z" style="fill:#ffb32c" />
+                            <path d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z" style="fill:#f2a222" />
+                        </g>
+                    </svg>
+                </span>
+            </div>
+            <div class="nk-file-name">
+                <div class="nk-file-name-text">
+                    <a href="media/send-files/${data.file.split('\\')[2]}" class="title">${data.file.split('\\')[2]}</a>
+                    <div class="nk-file-star asterisk"><a href="#" class="active"><em class="asterisk-off icon ni ni-star"></em><em class="asterisk-on icon ni ni-star-fill"></em></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="chat-meta">
+                                                        <li>{{ conv.sender.name }}</li>
+                                                        <li>{{ conv.create }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .chat -->
+
+      `
+          }
+      }
+      else if(check_sender === "me") {
+          //check_sender = "you";
+
+          if(message.length > 0){
+          document.querySelector('#chat-panel').innerHTML += `
+
+                                                    <div class="chat is-me mt-5">
+
+                                                <div class="chat-content">
+                                                    <div class="chat-bubbles">
+                                                        <div class="chat-bubble">
+                                                            <div class="chat-msg"> ${data.message} </div>
+                                                            <ul class="chat-msg-more">
+                                                                <li class="d-none d-sm-block"><a href="#" class="btn btn-icon btn-sm btn-trigger"><em class="icon ni ni-reply-fill"></em></a></li>
+                                                                <li>
+                                                                    <div class="dropdown">
+                                                                        <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                                                            <ul class="link-list-opt no-bdr">
+                                                                                <li class="d-sm-none"><a href="#"><em class="icon ni ni-reply-fill"></em> Reply</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-pen-alt-fill"></em> Edit</a></li>
+                                                                                <li><a href="#"><em class="icon ni ni-trash-fill"></em> Remove</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="chat-meta">
+                                                        <li>now</li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .chat -->
+
+      `
+      }
+      else if(file.length > 0){
+            document.querySelector('#chat-panel').innerHTML += `
+                                            <div class="chat is-me mt-5">
+                                                <div class="chat-avatar">
+                                                    <div class="user-avatar bg-purple">
+                                                        <span>{{ chat_with.initial }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="chat-content">
+                                                    <div class="chat-bubbles">
+                                                        <div class="chat-bubble">
+                                                            <div class="chat-msg">
+                                                                <div class="nk-file-item nk-file">
+    <div class="nk-file-info">
+        <div class="nk-file-title">
+
+            <div class="nk-file-icon">
+                <span class="nk-file-icon-type">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+                        <g>
+                            <rect x="32" y="16" width="28" height="15" rx="2.5" ry="2.5" style="fill:#f29611" />
+                            <path d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z" style="fill:#ffb32c" />
+                            <path d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z" style="fill:#f2a222" />
+                        </g>
+                    </svg>
+                </span>
+            </div>
+            <div class="nk-file-name">
+                <div class="nk-file-name-text">
+                    <a href="media/send-files/${data.file.split('\\')[2]}" class="title">${data.file.split('\\')[2]}</a>
+                    <div class="nk-file-star asterisk"><a href="#" class="active"><em class="asterisk-off icon ni ni-star"></em><em class="asterisk-on icon ni ni-star-fill"></em></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="chat-meta">
+                                                    </ul>
+                                                </div>
+                                            </div><!-- .chat -->
+
+      `
+          }
+      }
+
+   }
+
+</script>
+
+</body>

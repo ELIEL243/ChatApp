@@ -1,0 +1,176 @@
+{% for msg in emp_messages %}
+                                                        {% if msg.sender_id == employee.id %}
+                                                            {% if msg.is_read %}
+                                                                <li class="chat-item">
+                                                                    <a class="chat-link chat-open"
+                                                                       hx-get="{% url 'get_conversation' msg.sender.id msg.receiver.id %}"
+                                                                       hx-trigger="click" hx-target="#chat-content"
+                                                                       hx-swap="innerHTML">
+                                                                        <div class="chat-media user-avatar bg-purple">
+                                                                            <span>{{ msg.receiver.initial }}</span>
+                                                                            <span class="status dot dot-lg dot-gray"></span>
+                                                                        </div>
+                                                                        <div class="chat-info">
+                                                                            <div class="chat-from">
+                                                                                <div class="name">{{ msg.receiver.name }}</div>
+                                                                                <span class="time">{{ msg.create|timesince }}</span>
+                                                                            </div>
+                                                                            <div class="chat-context">
+                                                                                <div class="text">
+                                                                                    <p>
+
+                                                                                        {% if msg.message_content.text_message %}
+                                                                                            moi:
+                                                                                            {{ msg.message_content.text_message }}
+                                                                                        {% else %}
+                                                                                            moi:
+                                                                                            {{ msg.message_content.file.name }}
+                                                                                        {% endif %}
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="status delivered">
+                                                                                    <em class="icon ni ni-check-circle-fill"></em>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
+
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="chat-item is-unread">
+                                                                    <a class="chat-link chat-open"
+                                                                       hx-get="{% url 'get_conversation' msg.sender.id msg.receiver.id %}"
+                                                                       hx-trigger="click" hx-target="#chat-content"
+                                                                       hx-swap="innerHTML">
+                                                                        <div class="chat-media user-avatar bg-purple">
+                                                                            <span>{{ msg.receiver.initial }}</span>
+                                                                            <span class="status dot dot-lg dot-gray"></span>
+                                                                        </div>
+                                                                        <div class="chat-info">
+                                                                            <div class="chat-from">
+                                                                                <div class="name">{{ msg.receiver.name }}</div>
+                                                                                <span class="time">{{ msg.create|timesince }}</span>
+                                                                            </div>
+                                                                            <div class="chat-context">
+                                                                                <div class="text">
+                                                                                    <p>
+                                                                                        {% if msg.message_content.text_message %}
+                                                                                            moi:
+                                                                                            {{ msg.message_content.text_message }}
+                                                                                        {% else %}
+                                                                                            moi:
+                                                                                            {{ msg.message_content.file.name }}
+                                                                                        {% endif %}
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="status delivered">
+                                                                                    <em class="icon ni ni-check-circle-fill"></em>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
+
+                                                                </li>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            {% if msg.is_read %}
+                                                                <li class="chat-item">
+                                                                    <a class="chat-link chat-open"
+                                                                       hx-get="{% url 'get_conversation' msg.sender.id msg.receiver.id %}"
+                                                                       hx-trigger="click" hx-target="#chat-content"
+                                                                       hx-swap="innerHTML">
+                                                                        <div class="chat-media user-avatar bg-purple">
+                                                                            <span>{{ msg.sender.initial }}</span>
+                                                                            <span class="status dot dot-lg dot-gray"></span>
+                                                                        </div>
+                                                                        <div class="chat-info">
+                                                                            <div class="chat-from">
+                                                                                <div class="name">{{ msg.sender.name }}</div>
+                                                                                <span class="time">{{ msg.create|timesince }}</span>
+                                                                            </div>
+                                                                            <div class="chat-context">
+                                                                                <div class="text">
+                                                                                    <p>
+
+                                                                                        {% if msg.message_content.text_message %}
+                                                                                            {{ msg.message_content.text_message }}
+                                                                                        {% else %}
+                                                                                            {{ msg.message_content.file.name }}
+                                                                                        {% endif %}
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="status delivered">
+                                                                                    <em class="icon ni ni-check-circle-fill"></em>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
+
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="chat-item is-unread">
+                                                                    <a class="chat-link chat-open"
+                                                                       hx-get="{% url 'get_conversation' msg.sender.id msg.receiver.id %}"
+                                                                       hx-trigger="click" hx-target="#chat-content"
+                                                                       hx-swap="innerHTML">
+                                                                        <div class="chat-media user-avatar bg-purple">
+                                                                            <span>{{ msg.sender.initial }}</span>
+                                                                            <span class="status dot dot-lg dot-gray"></span>
+                                                                        </div>
+                                                                        <div class="chat-info">
+                                                                            <div class="chat-from">
+                                                                                <div class="name">{{ msg.sender.name }}</div>
+                                                                                <span class="time">{{ msg.create|timesince }}</span>
+                                                                            </div>
+                                                                            <div class="chat-context">
+                                                                                <div class="text">
+                                                                                    <p>
+                                                                                        {% if msg.message_content.text_message %}
+                                                                                            {{ msg.message_content.text_message }}
+                                                                                        {% else %}
+                                                                                            {{ msg.message_content.file.name }}
+                                                                                        {% endif %}
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="status delivered">
+                                                                                    <em class="icon ni ni-check-circle-fill"></em>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
+
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+
+                                                    {% for emp in employees %}
+                                                        <li class="chat-item is-unread">
+                                                            <a class="chat-link chat-open"
+                                                               hx-get="{% url 'get_conversation' employee.id emp.id %}"
+                                                               hx-trigger="click" hx-target="#chat-content"
+                                                               hx-swap="innerHTML">
+                                                                <div class="chat-media user-avatar bg-purple">
+                                                                    <span>{{ emp.initial }}</span>
+                                                                    <span class="status dot dot-lg dot-gray"></span>
+                                                                </div>
+                                                                <div class="chat-info">
+                                                                    <div class="chat-from">
+                                                                        <div class="name">{{ emp.name }}</div>
+
+                                                                    </div>
+                                                                    <div class="chat-context">
+                                                                        <div class="text">
+                                                                            <p>
+
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="status delivered">
+                                                                            <em class="icon ni ni-check-circle-fill"></em>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+
+                                                        </li>
+                                                    {% endfor %}

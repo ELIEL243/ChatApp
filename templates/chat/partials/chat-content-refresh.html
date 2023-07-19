@@ -1,0 +1,149 @@
+{% for conv in conversations %}
+    <script>
+    if(check) {
+        var lastChatDiv = document.querySelector(".chat:last-child");
+        check = false;
+    }
+// Scroll to the div
+lastChatDiv.scrollIntoView({ behavior: "smooth" });
+    </script>
+    {% if conv.sender.id != employee.id %}
+        <div class="chat is-you">
+            <div class="chat-avatar">
+                <div class="user-avatar bg-purple">
+                    <span>{{ conv.sender.initial }}</span>
+                </div>
+            </div>
+            <div class="chat-content">
+                <div class="chat-bubbles">
+                    <div class="chat-bubble">
+                        <div class="chat-msg">
+                            {% if conv.message_content.text_message %}{{ conv.message_content.text_message }}
+                            {% else %}
+                                <div class="nk-file-item nk-file">
+                                    <div class="nk-file-info">
+                                        <div class="nk-file-title">
+
+                                            <div class="nk-file-icon">
+                <span class="nk-file-icon-type">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+                        <g>
+                            <rect x="32" y="16" width="28" height="15" rx="2.5" ry="2.5" style="fill:#f29611"/>
+                            <path d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z"
+                                  style="fill:#ffb32c"/>
+                            <path d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z"
+                                  style="fill:#f2a222"/>
+                        </g>
+                    </svg>
+                </span>
+                                            </div>
+                                            <div class="nk-file-name">
+                                                <div class="nk-file-name-text">
+                                                    <a href="{{ conv.message_content.file.url }}"
+                                                       class="title">{{ conv.message_content.file.name }}</a>
+                                                    <div class="nk-file-star asterisk"><a href="#" class="active"><em
+                                                            class="asterisk-off icon ni ni-star"></em><em
+                                                            class="asterisk-on icon ni ni-star-fill"></em></a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                        </div>
+                        <ul class="chat-msg-more">
+                            <li class="d-none d-sm-block"><a href="#" class="btn btn-icon btn-sm btn-trigger"><em
+                                    class="icon ni ni-reply-fill"></em></a></li>
+                            <li>
+                                <div class="dropdown">
+                                    <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle"
+                                       data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                        <ul class="link-list-opt no-bdr">
+                                            <li class="d-sm-none"><a href="#"><em class="icon ni ni-reply-fill"></em>
+                                                Reply</a></li>
+                                            <li><a href="#"><em class="icon ni ni-pen-alt-fill"></em> Edit</a></li>
+                                            <li><a href="#"><em class="icon ni ni-trash-fill"></em> Remove</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <ul class="chat-meta">
+                    <li>{{ conv.sender.name }}</li>
+                    <li>{{ conv.create }}</li>
+                </ul>
+            </div>
+        </div><!-- .chat -->
+    {% else %}
+        <div class="chat is-me">
+
+            <div class="chat-content">
+                <div class="chat-bubbles">
+                    <div class="chat-bubble">
+                        <div class="chat-msg">
+                            {% if conv.message_content.text_message %}{{ conv.message_content.text_message }}{% else %}
+                                <div class="nk-file-item nk-file">
+                                    <div class="nk-file-info">
+                                        <div class="nk-file-title">
+
+                                            <div class="nk-file-icon">
+                <span class="nk-file-icon-type">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+                        <g>
+                            <rect x="32" y="16" width="28" height="15" rx="2.5" ry="2.5" style="fill:#f29611"/>
+                            <path d="M59.7778,61H12.2222A6.4215,6.4215,0,0,1,6,54.3962V17.6038A6.4215,6.4215,0,0,1,12.2222,11H30.6977a4.6714,4.6714,0,0,1,4.1128,2.5644L38,24H59.7778A5.91,5.91,0,0,1,66,30V54.3962A6.4215,6.4215,0,0,1,59.7778,61Z"
+                                  style="fill:#ffb32c"/>
+                            <path d="M8.015,59c2.169,2.3827,4.6976,2.0161,6.195,2H58.7806a6.2768,6.2768,0,0,0,5.2061-2Z"
+                                  style="fill:#f2a222"/>
+                        </g>
+                    </svg>
+                </span>
+                                            </div>
+                                            <div class="nk-file-name">
+                                                <div class="nk-file-name-text">
+                                                    <a href="{{ conv.message_content.file.url }}"
+                                                       class="title text-light">{{ conv.message_content.file.name }}</a>
+                                                    <div class="nk-file-star asterisk"><a href="#" class="active"><em
+                                                            class="asterisk-off icon ni ni-star"></em><em
+                                                            class="asterisk-on icon ni ni-star-fill"></em></a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %} </div>
+                        <ul class="chat-msg-more">
+                            <li class="d-none d-sm-block"><a href="#" class="btn btn-icon btn-sm btn-trigger"><em
+                                    class="icon ni ni-reply-fill"></em></a></li>
+                            <li>
+                                <div class="dropdown">
+                                    <a href="#" class="btn btn-icon btn-sm btn-trigger dropdown-toggle"
+                                       data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                        <ul class="link-list-opt no-bdr">
+                                            <li class="d-sm-none"><a href="#"><em class="icon ni ni-reply-fill"></em>
+                                                Reply</a></li>
+                                            <li><a href="#"><em class="icon ni ni-pen-alt-fill"></em> Edit</a></li>
+                                            <li><a href="#"><em class="icon ni ni-trash-fill"></em> Remove</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <ul class="chat-meta">
+                    <li>{{ conv.create }}</li>
+                </ul>
+            </div>
+        </div><!-- .chat -->
+
+
+
+    {% endif %}
+{% endfor %}
+

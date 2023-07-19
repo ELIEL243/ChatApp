@@ -1,0 +1,209 @@
+{% extends 'chat/base-chat.html' %}
+{% load static %}
+{% block content %}
+<body class="nk-body bg-lighter npc-general has-sidebar">
+
+
+
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- sidebar @s -->
+            <!-- sidebar @e -->
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                <!-- main header @s -->
+                <div class="nk-header nk-header-fixed is-light">
+                    <div class="container-fluid">
+                        <div class="nk-header-wrap">
+                            <div class="nk-menu-trigger d-xl-none ms-n1">
+                                <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
+                            </div>
+                            <div class="nk-header-brand d-xl-none">
+                                <a href="#" class="logo-link">
+                                    <img class="logo-dark logo-img logo-img-lg" src="{% static 'images/message.png' %}" srcset="{% static 'images/message.png' %}" alt="logo">
+                                </a>
+                            </div><!-- .nk-header-brand -->
+                            <div class="nk-header-news d-none d-xl-block">
+                                <div class="nk-news-list">
+                                    <a class="nk-news-item" href="#">
+                                        <div class="nk-news-icon">
+                                            <em class="icon ni ni-card-view"></em>
+                                        </div>
+                                        <div class="nk-news-text">
+                                            <p>Do you know the latest update of 2022? <span> A overview of our is now available on YouTube</span></p>
+                                            <em class="icon ni ni-external"></em>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div><!-- .nk-header-news -->
+
+                        </div><!-- .nk-header-wrap -->
+                    </div><!-- .container-fliud -->
+                </div>
+                <!-- main header @e -->
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+                                <div class="nk-chat">
+                                    <div class="nk-chat-aside">
+                                        <div class="nk-chat-aside-head">
+                                            <div class="nk-chat-aside-user">
+                                                <div class="dropdown">
+                                                    <a href="#" class="dropdown-toggle dropdown-indicator" data-bs-toggle="dropdown">
+                                                        <div class="user-avatar">
+                                                            <span>{{ employee.initial }}</span>
+                                                        </div>
+                                                        <div class="title">ScrollTalk</div>
+                                                    </a>
+
+                                                </div>
+                                            </div><!-- .nk-chat-aside-user -->
+                                            <ul class="nk-chat-aside-tools g-2">
+                                                <li>
+                                                    <div class="dropdown">
+                                                        <a href="#" class="btn btn-round btn-icon btn-light dropdown-toggle" data-bs-toggle="dropdown">
+                                                            <em class="icon ni ni-setting-alt-fill"></em>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <ul class="link-list-opt no-bdr">
+                                                                <li class="divider"></li>
+                                                                <li><a href="{% url 'home-chat' employee.entreprise.name %}"><span>Messages</span></a></li>
+
+                                                                <li><a href="{% url 'home-chat-group' employee.entreprise.name %}"><span>Messages de groupe</span></a></li>
+                                                                <li>
+                                                                    <a href="{% url 'news' %}"><span>Diffusions</span></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a data-bs-toggle="modal"
+                                                                       data-bs-target="#modalForm"><span>Nouveau groupe</span></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="{% url 'call' ref 'true' %}" target="_blank"><span>Nouvelle reunion</span></a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                            </ul><!-- .nk-chat-aside-tools -->
+                                        </div><!-- .nk-chat-aside-head -->
+                                        <div class="nk-chat-aside-body" data-simplebar>
+                                            <div class="nk-chat-aside-search">
+                                                <div class="form-group">
+                                                    <div class="form-control-wrap">
+                                                        <div class="form-icon form-icon-left">
+                                                            <em class="icon ni ni-search"></em>
+                                                        </div>
+                                                        <input type="text" class="form-control form-round" id="default-03" placeholder="Search by name">
+                                                    </div>
+                                                </div>
+                                            </div><!-- .nk-chat-aside-search -->
+
+                                            <div class="nk-chat-list">
+                                                <h6 class="title overline-title-alt">Groupes</h6>
+                                                <ul class="chat-list">
+                                                {% for group in groups %}
+                                                    <li class="chat-item">
+                                                        <a class="chat-link chat-open" hx-get="{% url 'get_conversation_group' group.group.name %}" hx-trigger="click" hx-target="#chat-content" hx-swap="innerHTML">
+                                                            <div class="chat-media user-avatar bg-purple">
+                                                                <span>{{ group.group.initial }}</span>
+                                                                <span class="status dot dot-lg dot-gray"></span>
+                                                            </div>
+                                                            <div class="chat-info">
+                                                                <div class="chat-from">
+                                                                    <div class="name">{{ group.group.name }}</div>
+                                                                </div>
+                                                                <div class="chat-context">
+                                                                    <div class="text">
+                                                                        <p>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="status delivered">
+                                                                        <em class="icon ni ni-check-circle-fill"></em>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+
+                                                    </li>
+
+                                                {% endfor %}
+
+                                                </ul><!-- .chat-list -->
+                                            </div><!-- .nk-chat-list -->
+                                        </div>
+
+                                    </div><!-- .nk-chat-aside -->
+                                <div class="nk-chat-body profile-shown" id="chat-content"></div>
+
+                                    <!-- .nk-chat-body -->
+                                </div><!-- .nk-chat -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+                <!-- footer @s -->
+                <div class="nk-footer" id="chat-test">
+                    <div class="container-fluid">
+                        <div class="nk-footer-wrap">
+                            <div class="nk-footer-copyright"> &copy; 2022 DashLite. Template by <a href="https://softnio.com" target="_blank">Softnio</a>
+                            </div>
+                            <div class="nk-footer-links">
+                                <ul class="nav nav-sm">
+                                    <li class="nav-item dropup">
+                                        <a href="#" class="dropdown-toggle dropdown-indicator has-indicator nav-link text-base" data-bs-toggle="dropdown" data-offset="0,10"><span>English</span></a>
+                                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                            <ul class="language-list">
+                                                <li>
+                                                    <a href="#" class="language-item">
+                                                        <span class="language-name">English</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="language-item">
+                                                        <span class="language-name">Español</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="language-item">
+                                                        <span class="language-name">Français</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="language-item">
+                                                        <span class="language-name">Türkçe</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer @e -->
+
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <div id="check-call" hx-target="this" hx-get="{% url 'check-call' %}" hx-trigger="every 3s" hx-swap="innerHTML">
+
+    </div>
+    <!-- JavaScript -->
+    <script src="{% static 'js/htmx.min.js' %}"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
+
+</body>
+
+
+
+{% endblock %}

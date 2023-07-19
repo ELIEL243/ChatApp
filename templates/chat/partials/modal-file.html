@@ -1,0 +1,35 @@
+{% load static %}
+
+{% if call == "True" %}
+<div class="modal fade" tabindex="-1" id="modalAlert">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross"></em></a>
+                <div class="modal-body modal-body-lg text-center">
+                    <div class="nk-modal">
+                        <em class="nk-modal-icon icon icon-circle icon-circle-xxl ni ni-call bg-success"></em>
+                        <h4 class="nk-modal-title">Appel entrant</h4>
+                        <div class="nk-modal-text">
+                            <div class="caption-text"><strong>{{ unique_call.caller.name }}</strong> vous appel</div>
+
+                        </div>
+                        <div class="nk-modal-action">
+                            <a href="{% url 'call' sender_id receiver_id 'false' %}" class="btn btn-lg btn-mw btn-primary">Accepter</a>
+                        </div>
+                    </div>
+                </div><!-- .modal-body -->
+                <div class="modal-footer bg-lighter">
+                    <div class="text-center w-100">
+                        <p>Earn upto $25 for each friend your refer! <a href="#">Invite friends</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="modal-btn" class="btn btn-success hidden" data-bs-toggle="modal" data-bs-target="#modalAlert">
+
+    <script>
+
+       document.getElementById('modal-btn').click()
+    </script>
+{% endif %}

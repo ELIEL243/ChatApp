@@ -1,0 +1,30 @@
+<div class="modal fade" id="modalForm">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nouveau groupe</h5>
+                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <em class="icon ni ni-cross"></em>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <form method="get" class="form-validate is-alter">
+                        <div class="form-group">
+                            <label class="form-label" for="full-name">Nom du groupe</label>
+                            <div class="form-control-wrap">
+                                <input type="text" autocomplete="off" class="form-control" id="full-name" name="name" required>
+                            </div>
+                            <datalist id="produits">
+                                                    {% for pv in pvs %}
+                                                        <option value="{{ pv.name }}"></option>
+                                                    {% endfor %}
+                                                </datalist>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" name="continuer" class="btn btn-lg btn-primary">Continuer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
